@@ -1,0 +1,26 @@
+﻿@page
+@model OrleansShopping.Pages.EditProductModel
+@{
+}
+
+<form method="post" class="form">
+    <input type="hidden" asp-for="Product.Id" class="form-control mb-3" />
+    <input type="hidden" asp-for="Product.DetailsUrl" class="form-control mb-3" />
+    <input type="hidden" asp-for="Product.ImageUrl" class="form-control mb-3" />
+    <label>Name</label>
+    <input asp-for="Product.Name" class="form-control mb-3" />
+    
+    <label>Description</label>
+    <input asp-for="Product.Description" class="form-control mb-3" />
+    
+    <label>Category</label>
+    <input asp-for="Product.Category" class="form-control mb-3" />
+    
+    <label>Quantity</label>
+    <input asp-for="Product.Quantity" class="form-control mb-3" />
+    
+    <label>Price</label>
+    <input asp-for="Product.UnitPrice" class="form-control mb-3" />
+
+    <input type="submit" class="btn btn-primary" />
+</form>

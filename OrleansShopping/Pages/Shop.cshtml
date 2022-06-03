@@ -1,0 +1,35 @@
+﻿@page
+@model ShopModel
+
+<h1>Shop<a asp-page="cart" class="btn btn-primary float-end">Go to cart (@Model.CartCount)</a></h1>
+<hr />
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <td>Image</td>
+            <td>Name</td>
+            <td>Description</td>
+            <td>Unit Price</td>
+            <td>Quantity</td>
+        </tr>
+    </thead>
+    @foreach (var item in Model.Products)
+    {
+        <tr>
+            <td><img src="@item.ImageUrl" width="100" /></td>
+            <td>@item.Name</td>
+            <td>@item.Description</td>
+            <td>@item.UnitPrice</td>
+            <td>@item.Quantity</td>
+            <td>
+                @if (!item.InCart)
+                {
+                    <form method="post"><input type="hidden" asp-for="@item.Id" /><input type="submit" value="Add" class="btn btn-secondary btn-sm"></form>
+                } else
+                {
+                    <form method="post"><input type="hidden" asp-for="@item.Id" /><input disabled type="submit" value="Add" class="btn btn-secondary btn-sm"></form>
+                }
+            </td>
+        </tr>
+    }
+</table>

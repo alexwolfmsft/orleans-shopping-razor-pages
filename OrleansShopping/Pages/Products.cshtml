@@ -1,0 +1,30 @@
+﻿@page
+@model ProductsModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1>Products
+<a class="btn btn-primary float-end" asp-page="EditProduct">New Product</a></h1>
+<hr />
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <td>Image</td>
+            <td>Name</td>
+            <td>Description</td>
+            <td>Quantity</td>
+            <td>Unit Price</td>
+        </tr>
+    </thead>
+    @foreach (var item in Model.Products)
+    {
+        <tr>
+            <td><img src="@item.ImageUrl" width="100" /></td>
+            <td>@item.Name</td>
+            <td>@item.Description</td>
+            <td>@item.Quantity</td>
+            <td>@item.UnitPrice</td>
+        </tr>
+    }
+</table>

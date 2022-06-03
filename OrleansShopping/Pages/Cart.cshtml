@@ -1,0 +1,39 @@
+﻿@page
+@model OrleansShopping.Pages.CartModel
+@{
+}
+<h1>Shopping Cart</h1>
+<hr />
+
+@if(Model.CartItems.Count > 0)
+{
+    <table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <td>Image</td>
+            <td>Name</td>
+            <td>Description</td>
+            <td>Quantity</td>
+            <td>Total Price</td>
+        </tr>
+    </thead>
+    @foreach (var item in Model.CartItems)
+    {
+        <tr>
+            <td><img src="@item.Product.ImageUrl" width="100" /></td>
+            <td>@item.Product.Name</td>
+            <td>@item.Product.Description</td>
+            <td>@item.Quantity</td>
+            <td>@item.Product.TotalPrice</td>
+        </tr>
+    }
+</table>
+
+}
+else {
+    <p>There are no items in your cart.</p>
+}
+
+<form method="post" class="mb-5">
+    <input type="submit" value="Clear cart" class="btn btn-primary btn-success float-end" />    
+</form>

@@ -1,0 +1,42 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Shop with Orleans and Razor Pages.</p>
+</div>
+<hr class="mb-5"/>
+<div class="row">
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Shop</h5>
+                    <p class="card-text">Add products to your cart.</p>
+                    <a asp-page="/Shop" class="btn btn-primary">Shop</a>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Manage Products</h5>
+                        <p class="card-text">Create and edit products.</p>
+                        <a asp-page="/Shop" class="btn btn-primary">Products</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Shopping Cart</h5>
+                        <p class="card-text">View your shopping cart.</p>
+                        <a asp-page="/Shop" class="btn btn-primary">Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+</div>
