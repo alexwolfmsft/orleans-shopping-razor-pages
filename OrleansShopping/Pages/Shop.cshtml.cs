@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace OrleansShopping.Pages
 {
+
     public class ShopModel : PageModel
     {
         private readonly InventoryService InventoryService;
@@ -24,7 +25,9 @@ namespace OrleansShopping.Pages
         public async Task<IActionResult> OnGet()
         {
             Products = await this.InventoryService.GetAllProductsAsync();
+            CartItems = await this.ShoppingCartService.GetAllItemsAsync();
             CartCount = await ShoppingCartService.GetCartCountAsync();
+            Products.ToList().ForEach(x => x.InCart = CartItems.Any(y => y.Product.Id == x.Id));
 
             return Page();
         }
@@ -32,9 +35,8 @@ namespace OrleansShopping.Pages
 
         public async Task<IActionResult> OnPost([FromForm(Name ="item.Id")]string ProductId)
         {
-            // TODO: Add Get Item By ID method
+            // TODO: Add Get Item By ID method to avoid this call
             Products = await this.InventoryService.GetAllProductsAsync();
-            CartCount = await ShoppingCartService.GetCartCountAsync();
 
             var product = Products?.FirstOrDefault(p => p.Id == ProductId);
             if (product is null)
@@ -42,17 +44,11 @@ namespace OrleansShopping.Pages
                 return Page();
             }
 
-            if (await ShoppingCartService.AddOrUpdateItemAsync(1, product))
-            {
-                CartCount = await ShoppingCartService.GetCartCountAsync();
-            }
+            await ShoppingCartService.AddOrUpdateItemAsync(1, product);
 
-            Products = await this.InventoryService.GetAllProductsAsync();
-
-            // This prevents all the hidden form field ids from being the same on reload - otherwise they'll get repopulated from model state
-            // Could also just redirect to the OnGet
-            ModelState.Clear();
-            return Page();
+            // This redirect prevents us from having to repopulate everything on the Post
+            // It also adheres to post -> redirect -> get pattern
+            return RedirectToPage();
         }
     }
-}
+} 

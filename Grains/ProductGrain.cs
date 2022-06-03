@@ -22,7 +22,8 @@ internal class ProductGrain : Grain, IProductGrain
     Task IProductGrain.ReturnProductAsync(int quantity) =>
         UpdateStateAsync(_product.State with
         {
-            Quantity = _product.State.Quantity + quantity
+            Quantity = _product.State.Quantity + quantity,
+            //InCart = false
         });
 
     async Task<(bool IsAvailable, ProductDetails? ProductDetails)> IProductGrain.TryTakeProductAsync(int quantity)

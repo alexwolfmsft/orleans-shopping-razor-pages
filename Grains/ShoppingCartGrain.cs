@@ -7,12 +7,19 @@ namespace Orleans.ShoppingCart.Grains;
 public sealed class ShoppingCartGrain : Grain, IShoppingCartGrain
 {
     private readonly IPersistentState<Dictionary<string, CartItem>> _cart;
+    private readonly IPersistentState<ProductDetails> _product;
 
     public ShoppingCartGrain(
         [PersistentState(
             stateName: "ShoppingCart",
             storageName: "shopping-cart")]
-        IPersistentState<Dictionary<string, CartItem>> cart) => _cart = cart;
+        IPersistentState<Dictionary<string, CartItem>> cart, [PersistentState(
+            stateName: "Product",
+            storageName: "shopping-cart")]
+        IPersistentState<ProductDetails> product)
+    { 
+        _cart = cart; 
+        _product = product; }
 
     async Task<bool> IShoppingCartGrain.AddOrUpdateItemAsync(int quantity, ProductDetails product)
     {
@@ -40,7 +47,11 @@ public sealed class ShoppingCartGrain : Grain, IShoppingCartGrain
 
     Task IShoppingCartGrain.EmptyCartAsync()
     {
-        _cart.State.Values.ToList().ForEach(x => x.Product.InCart = false);
+        //_cart.State.Values.ToList().ForEach(x => {
+        //    x.Product.InCart = false;
+        //    _product.State = x.Product;
+        //    _product.WriteStateAsync();
+        //});
         _cart.State.Clear();
         return _cart.ClearStateAsync();
     }
